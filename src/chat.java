@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 import java.awt.*;
+import static java.util.Collections.list;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -14,13 +15,18 @@ import javax.swing.border.LineBorder;
  */
 public class chat extends javax.swing.JFrame {
     protected int num = 0;
-    protected JPanel[] chatList = new JPanel[100];
+    protected JPanel[] chatList = new JPanel[100]; 
 
     /**
      * Creates new form chat
      */
     public chat() {
         initComponents();
+
+        this.setLocationRelativeTo(null); // center screen
+        this.setResizable(false);
+
+        //chatPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         chatPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
     }
 
@@ -39,20 +45,20 @@ public class chat extends javax.swing.JFrame {
         enviarButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(800, 600));
 
         chatPanel.setBackground(new java.awt.Color(255, 255, 255));
-        chatPanel.setAutoscrolls(true);
         chatPanel.setPreferredSize(new java.awt.Dimension(700, 500));
 
         javax.swing.GroupLayout chatPanelLayout = new javax.swing.GroupLayout(chatPanel);
         chatPanel.setLayout(chatPanelLayout);
         chatPanelLayout.setHorizontalGroup(
             chatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 745, Short.MAX_VALUE)
+            .addGap(0, 730, Short.MAX_VALUE)
         );
         chatPanelLayout.setVerticalGroup(
             chatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 464, Short.MAX_VALUE)
+            .addGap(0, 450, Short.MAX_VALUE)
         );
 
         mensajeTextArea.setColumns(20);
@@ -74,23 +80,23 @@ public class chat extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(chatPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 745, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chatPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
                         .addGap(18, 18, 18)
                         .addComponent(enviarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(chatPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(chatPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(enviarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         pack();
@@ -99,8 +105,11 @@ public class chat extends javax.swing.JFrame {
 
     private void enviarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarButtonActionPerformed
         // TODO add your handling code here:
+        JPanel mainPanel = new JPanel(new GridLayout(0, 1));                
+        mainPanel.setBackground(Color.WHITE);
+        
         JPanel msjpanel =  new JPanel();
-        msjpanel.setPreferredSize( new Dimension(700, 100) );
+        msjpanel.setPreferredSize( new Dimension(600, 100) );
         msjpanel.setBorder(new LineBorder(Color.WHITE, 10, true));
        
         if(num % 2 == 0) {
@@ -114,12 +123,22 @@ public class chat extends javax.swing.JFrame {
         
         for (int i = 0; i < num; i++) {
             if(i % 2 == 0) {
-                chatPanel.add(chatList[i]);
+                mainPanel.add(chatList[i]);
             } else {
-                chatPanel.add(chatList[i]);
+                mainPanel.add(chatList[i]);
             }
         }
         
+        JScrollPane scrollPanel = new JScrollPane( mainPanel,
+            JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
+            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
+        );
+        scrollPanel.setBorder(null);
+        scrollPanel.setMinimumSize(new Dimension(chatPanel.getSize().width, chatPanel.getSize().height - 10));
+        scrollPanel.setPreferredSize(new Dimension(chatPanel.getSize().width, chatPanel.getSize().height - 10));
+
+        chatPanel.removeAll();
+        chatPanel.add(scrollPanel);
         chatPanel.revalidate();
         chatPanel.repaint();
     }//GEN-LAST:event_enviarButtonActionPerformed
