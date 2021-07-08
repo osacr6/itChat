@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 import java.awt.*;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import static java.util.Collections.list;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -26,8 +28,8 @@ public class chat extends javax.swing.JFrame {
         this.setLocationRelativeTo(null); // center screen
         this.setResizable(false);
 
-        //chatPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         chatPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        mensajeTextArea.setText(String.valueOf(num)+ ": ");
     }
 
     /**
@@ -108,16 +110,28 @@ public class chat extends javax.swing.JFrame {
         JPanel mainPanel = new JPanel(new GridLayout(0, 1));                
         mainPanel.setBackground(Color.WHITE);
         
-        JPanel msjpanel =  new JPanel();
+        JPanel msjpanel = new JPanel();
         msjpanel.setPreferredSize( new Dimension(600, 100) );
         msjpanel.setBorder(new LineBorder(Color.WHITE, 10, true));
-       
+        
+        JLabel imgLabel = new JLabel();
+        JLabel msjLabel = new JLabel();
+        msjLabel.setText(mensajeTextArea.getText());
+
         if(num % 2 == 0) {
+            msjpanel.setLayout(new FlowLayout(FlowLayout.LEFT));
             msjpanel.setBackground(new java.awt.Color(240, 240, 240));
+            imgLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/person-icon.png")));
+            msjpanel.add(imgLabel);
+            msjpanel.add(msjLabel);
         } else {
+            msjpanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
             msjpanel.setBackground(new java.awt.Color(240, 255, 255));
+            imgLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/robot-icon.png")));
+            msjpanel.add(msjLabel);
+            msjpanel.add(imgLabel);
         }
-  
+
         chatList[num] = msjpanel;
         num++;
         
@@ -134,13 +148,23 @@ public class chat extends javax.swing.JFrame {
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
         );
         scrollPanel.setBorder(null);
-        scrollPanel.setMinimumSize(new Dimension(chatPanel.getSize().width, chatPanel.getSize().height - 10));
         scrollPanel.setPreferredSize(new Dimension(chatPanel.getSize().width, chatPanel.getSize().height - 10));
+        
+        mensajeTextArea.setText(String.valueOf(num) + ": ");
+        enviarButton.setFocusable( false );
+        mensajeTextArea.setFocusable(true);
 
         chatPanel.removeAll();
         chatPanel.add(scrollPanel);
         chatPanel.revalidate();
         chatPanel.repaint();
+
+        // scroll to bottom
+        scrollPanel.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {  
+            public void adjustmentValueChanged(AdjustmentEvent e) {  
+                e.getAdjustable().setValue(e.getAdjustable().getMaximum());  
+            }
+        });
     }//GEN-LAST:event_enviarButtonActionPerformed
 
     /**
