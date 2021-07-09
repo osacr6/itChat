@@ -6,30 +6,29 @@
 import java.awt.*;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
-import static java.util.Collections.list;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
+
+import Chat.Mensajes;
 
 /**
  *
  * @author d.murillo.porras
  */
 public class chat extends javax.swing.JFrame {
-    protected int num = 0;
-    protected JPanel[] chatList = new JPanel[100]; 
+    Mensajes msj = new Mensajes();
 
     /**
      * Creates new form chat
      */
     public chat() {
         initComponents();
-
+        
         this.setLocationRelativeTo(null); // center screen
         this.setResizable(false);
 
         chatPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        mensajeTextArea.setText(String.valueOf(num)+ ": ");
+        msj.setMensaje("bot", "Hola humano! Estoy para ayudarte con sus preguntas a soporte técnico.");
+        this.render(msj.getMensajesPanel());
     }
 
     /**
@@ -105,44 +104,7 @@ public class chat extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void enviarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarButtonActionPerformed
-        // TODO add your handling code here:
-        JPanel mainPanel = new JPanel(new GridLayout(0, 1));                
-        mainPanel.setBackground(Color.WHITE);
-        
-        JPanel msjpanel = new JPanel();
-        msjpanel.setPreferredSize( new Dimension(600, 100) );
-        msjpanel.setBorder(new LineBorder(Color.WHITE, 10, true));
-        
-        JLabel imgLabel = new JLabel();
-        JLabel msjLabel = new JLabel();
-        msjLabel.setText(mensajeTextArea.getText());
-
-        if(num % 2 == 0) {
-            msjpanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-            msjpanel.setBackground(new java.awt.Color(240, 240, 240));
-            imgLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/person-icon.png")));
-            msjpanel.add(imgLabel);
-            msjpanel.add(msjLabel);
-        } else {
-            msjpanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-            msjpanel.setBackground(new java.awt.Color(240, 255, 255));
-            imgLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/robot-icon.png")));
-            msjpanel.add(msjLabel);
-            msjpanel.add(imgLabel);
-        }
-
-        chatList[num] = msjpanel;
-        num++;
-        
-        for (int i = 0; i < num; i++) {
-            if(i % 2 == 0) {
-                mainPanel.add(chatList[i]);
-            } else {
-                mainPanel.add(chatList[i]);
-            }
-        }
-        
+    private void render(JPanel mainPanel) {
         JScrollPane scrollPanel = new JScrollPane( mainPanel,
             JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
@@ -150,7 +112,7 @@ public class chat extends javax.swing.JFrame {
         scrollPanel.setBorder(null);
         scrollPanel.setPreferredSize(new Dimension(chatPanel.getSize().width, chatPanel.getSize().height - 10));
         
-        mensajeTextArea.setText(String.valueOf(num) + ": ");
+        mensajeTextArea.setText("");
         enviarButton.setFocusable( false );
         mensajeTextArea.setFocusable(true);
 
@@ -165,6 +127,12 @@ public class chat extends javax.swing.JFrame {
                 e.getAdjustable().setValue(e.getAdjustable().getMaximum());  
             }
         });
+    }
+    
+    private void enviarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarButtonActionPerformed
+        // TODO add your handling code here:
+        msj.setMensaje(mensajeTextArea.getText());
+        this.render(msj.getMensajesPanel());
     }//GEN-LAST:event_enviarButtonActionPerformed
 
     /**
