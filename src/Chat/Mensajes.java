@@ -11,7 +11,11 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.border.LineBorder;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 
 /**
  *
@@ -34,25 +38,29 @@ public class Mensajes {
         mainPanel.setBackground(Color.WHITE);
     
         JPanel msjpanel = new JPanel();
-        msjpanel.setPreferredSize( new Dimension(600, 100) );
+        msjpanel.setPreferredSize(new Dimension(600, 100));
         msjpanel.setBorder(new LineBorder(Color.WHITE, 10, true));
         
         JLabel imgLabel = new JLabel();
-        JLabel msjLabel = new JLabel();
+        JTextArea textArea = new JTextArea();
+        textArea.setPreferredSize(new Dimension(600, 70));
+        textArea.setLineWrap(true);
         
         if(user == "bot") {
             msjpanel.setLayout(new FlowLayout(FlowLayout.LEFT));
             msjpanel.setBackground(new java.awt.Color(240, 255, 255));
+            textArea.setBackground(new java.awt.Color(240, 255, 255));
             imgLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/robot-icon.png")));
             msjpanel.add(imgLabel);
-            msjLabel.setText("    " + text);
-            msjpanel.add(msjLabel);
+            textArea.setText(text);
+            msjpanel.add(textArea);
         } else {
             msjpanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
             msjpanel.setBackground(new java.awt.Color(240, 240, 240));
+            textArea.setBackground(new java.awt.Color(240, 240, 240));
             imgLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/person-icon.png")));
-            msjLabel.setText(text + "    ");
-            msjpanel.add(msjLabel);
+            textArea.setText(text);
+            msjpanel.add(textArea);
             msjpanel.add(imgLabel);
         }
 

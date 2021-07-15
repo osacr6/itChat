@@ -7,16 +7,24 @@ import java.awt.*;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import javax.swing.*;
+import java.util.List;
 
 import Chat.Mensajes;
+import Chat.watson;
+import com.ibm.watson.assistant.v2.model.MessageResponse;
+import com.ibm.watson.assistant.v2.model.RuntimeResponseGeneric;
+import java.awt.event.KeyEvent;
 
 /**
  *
  * @author d.murillo.porras
  */
 public class chat extends javax.swing.JFrame {
-    Mensajes msj = new Mensajes();
-
+    private Mensajes mensajes = new Mensajes();
+    private watson asistente = new watson();
+    private MessageResponse contexto;
+    
+   
     /**
      * Creates new form chat
      */
@@ -27,8 +35,10 @@ public class chat extends javax.swing.JFrame {
         this.setResizable(false);
 
         chatPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        msj.setMensaje("bot", "Hola humano! Estoy para ayudarte con sus preguntas a soporte técnico.");
-        this.render(msj.getMensajesPanel());
+        contexto = asistente.getRespuesta("Hola");
+        String respuesta = contexto.getOutput().getGeneric().get(0).text();
+        mensajes.setMensaje("bot", respuesta);
+        this.render(mensajes.getMensajesPanel());
     }
 
     /**
@@ -65,6 +75,16 @@ public class chat extends javax.swing.JFrame {
         mensajeTextArea.setColumns(20);
         mensajeTextArea.setRows(5);
         mensajeTextArea.setRequestFocusEnabled(false);
+        mensajeTextArea.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                mensajeTextAreaMousePressed(evt);
+            }
+        });
+        mensajeTextArea.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                mensajeTextAreaKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(mensajeTextArea);
 
         enviarButton.setText("Enviar");
@@ -113,13 +133,13 @@ public class chat extends javax.swing.JFrame {
         scrollPanel.setPreferredSize(new Dimension(chatPanel.getSize().width, chatPanel.getSize().height - 10));
         
         mensajeTextArea.setText("");
-        enviarButton.setFocusable( false );
-        mensajeTextArea.setFocusable(true);
+        mensajeTextArea.requestFocus();
 
         chatPanel.removeAll();
         chatPanel.add(scrollPanel);
         chatPanel.revalidate();
         chatPanel.repaint();
+        mensajeTextArea.requestFocus();
 
         // scroll to bottom
         scrollPanel.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {  
@@ -131,9 +151,29 @@ public class chat extends javax.swing.JFrame {
     
     private void enviarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarButtonActionPerformed
         // TODO add your handling code here:
-        msj.setMensaje(mensajeTextArea.getText());
-        this.render(msj.getMensajesPanel());
+        String mensaje = mensajeTextArea.getText().replaceAll("[\\n\\t]", "");
+        mensajes.setMensaje(mensaje);
+        
+        contexto = asistente.getRespuesta(mensaje);
+        List<RuntimeResponseGeneric> respuestas = contexto.getOutput().getGeneric();
+        for (int i = 0; i < respuestas.size(); i++) {
+            mensajes.setMensaje("bot", respuestas.get(i).text());
+        }
+
+        this.render(mensajes.getMensajesPanel());
     }//GEN-LAST:event_enviarButtonActionPerformed
+
+    private void mensajeTextAreaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mensajeTextAreaMousePressed
+        // TODO add your handling code here:
+         mensajeTextArea.requestFocus();
+    }//GEN-LAST:event_mensajeTextAreaMousePressed
+
+    private void mensajeTextAreaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_mensajeTextAreaKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            enviarButton.doClick();
+        }
+    }//GEN-LAST:event_mensajeTextAreaKeyPressed
 
     /**
      * @param args the command line arguments

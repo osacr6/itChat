@@ -92,6 +92,10 @@
             <Property name="rows" type="int" value="5"/>
             <Property name="requestFocusEnabled" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="mensajeTextAreaMousePressed"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="mensajeTextAreaKeyPressed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
