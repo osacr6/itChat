@@ -30,7 +30,6 @@ public class chat extends javax.swing.JFrame {
      */
     public chat() {
         initComponents();
-        
         this.setLocationRelativeTo(null); // center screen
         this.setResizable(false);
         mensajeTextArea.setLineWrap(true);
@@ -40,8 +39,6 @@ public class chat extends javax.swing.JFrame {
         String respuesta = contexto.getOutput().getGeneric().get(0).text();
         mensajes.setMensaje("bot", respuesta);
         this.render(mensajes.getMensajesPanel());
-        
-        
     }
 
     /**
@@ -57,6 +54,9 @@ public class chat extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         mensajeTextArea = new javax.swing.JTextArea();
         enviarButton = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        logInMenu = new javax.swing.JMenu();
+        tktMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -72,7 +72,7 @@ public class chat extends javax.swing.JFrame {
         );
         chatPanelLayout.setVerticalGroup(
             chatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 450, Short.MAX_VALUE)
+            .addGap(0, 440, Short.MAX_VALUE)
         );
 
         mensajeTextArea.setColumns(20);
@@ -100,6 +100,24 @@ public class chat extends javax.swing.JFrame {
             }
         });
 
+        logInMenu.setText("Iniciar sesion");
+        logInMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                logInMenuMousePressed(evt);
+            }
+        });
+        jMenuBar1.add(logInMenu);
+
+        tktMenu.setText("Crear Tiquete");
+        tktMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tktMenuMousePressed(evt);
+            }
+        });
+        jMenuBar1.add(tktMenu);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -117,13 +135,13 @@ public class chat extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(chatPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(enviarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(chatPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
+                    .addComponent(enviarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(36, 36, 36))
         );
 
         pack();
@@ -136,7 +154,7 @@ public class chat extends javax.swing.JFrame {
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
         );
         scrollPanel.setBorder(null);
-        scrollPanel.setPreferredSize(new Dimension(chatPanel.getSize().width, chatPanel.getSize().height - 10));
+        scrollPanel.setPreferredSize(new Dimension(chatPanel.getSize().width, chatPanel.getSize().height));
 
         chatPanel.removeAll();
         chatPanel.add(scrollPanel);
@@ -192,6 +210,17 @@ public class chat extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mensajeTextAreaKeyPressed
 
+    private void logInMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logInMenuMousePressed
+        // TODO add your handling code here:
+        new login().setVisible(true);
+    }//GEN-LAST:event_logInMenuMousePressed
+
+    private void tktMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tktMenuMousePressed
+        // TODO add your handling code here:
+        new crearTiquete().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_tktMenuMousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -230,7 +259,10 @@ public class chat extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel chatPanel;
     private javax.swing.JButton enviarButton;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JMenu logInMenu;
     private javax.swing.JTextArea mensajeTextArea;
+    private javax.swing.JMenu tktMenu;
     // End of variables declaration//GEN-END:variables
 }
