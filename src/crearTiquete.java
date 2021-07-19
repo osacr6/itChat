@@ -1,3 +1,6 @@
+
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,11 +13,12 @@
  */
 public class crearTiquete extends javax.swing.JFrame {
 
-    /**
-     * Creates new form crearTiquete
-     */
+    
     public crearTiquete() {
         initComponents();
+         setTitle("Tiquete de Usuario");
+         setLocationRelativeTo(null);
+         setResizable(false);
     }
 
     /**
@@ -26,31 +30,160 @@ public class crearTiquete extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jRadioButton1 = new javax.swing.JRadioButton();
+        jlabel1 = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        txtid = new javax.swing.JLabel();
+        txtID = new javax.swing.JTextField();
+        jlabel2 = new javax.swing.JLabel();
+        Btnaceptar = new javax.swing.JButton();
+        Btncancelar = new javax.swing.JButton();
+        txtTexto = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Tiquete");
 
-        jRadioButton1.setText("jRadioButton1");
+        jlabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jlabel1.setText("Nombre de usuario");
+
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
+
+        txtid.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtid.setText("ID");
+
+        txtID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIDActionPerformed(evt);
+            }
+        });
+
+        jlabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jlabel2.setText("Descripcion del tiquete");
+
+        Btnaceptar.setText("Aceptar");
+        Btnaceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnaceptarActionPerformed(evt);
+            }
+        });
+
+        Btncancelar.setText("Cancelar");
+        Btncancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtncancelarActionPerformed(evt);
+            }
+        });
+
+        txtTexto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTextoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(273, Short.MAX_VALUE)
-                .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(239, 239, 239))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Btnaceptar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Btncancelar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlabel2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jlabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(28, 28, 28)
+                                .addComponent(txtid)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 24, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(193, 193, 193)
-                .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(205, Short.MAX_VALUE))
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlabel1)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtid)
+                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jlabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 77, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Btnaceptar)
+                            .addComponent(Btncancelar))
+                        .addContainerGap())))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+     
+      private void limpiartxt(){
+    txtNombre.setText("");
+    txtID.setText("");
+    txtTexto.setText("");
+    }
+    
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
+
+    private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIDActionPerformed
+
+    private void BtnaceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnaceptarActionPerformed
+        String nombre = txtNombre.getText();
+        String id = txtID.getText();
+        String description = txtTexto.getText();
+
+        if ((txtNombre.getText().length() == 0) && (txtID.getText().length() == 0)
+                && (txtTexto.getText().length() == 0)) {
+            JOptionPane.showMessageDialog(this, "Ingrese un nombre", "Nombre", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Ingrese un id", "Id", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Debe ingresar una descripcion", "Descripcion", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "tiquete valido");
+            JOptionPane.showMessageDialog(this, "Solicitud enviada con exito", "Exito", JOptionPane.INFORMATION_MESSAGE);
+        }
+          limpiartxt();
+    }//GEN-LAST:event_BtnaceptarActionPerformed
+
+    private void BtncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtncancelarActionPerformed
+        int opcion;
+
+        opcion =JOptionPane.showConfirmDialog(null,
+            "Desea salir?","Salir del sistema",
+            JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+
+        if (opcion == 0) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_BtncancelarActionPerformed
+
+    private void txtTextoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTextoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTextoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -88,6 +221,13 @@ public class crearTiquete extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JButton Btnaceptar;
+    private javax.swing.JButton Btncancelar;
+    private javax.swing.JLabel jlabel1;
+    private javax.swing.JLabel jlabel2;
+    private javax.swing.JTextField txtID;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JFormattedTextField txtTexto;
+    private javax.swing.JLabel txtid;
     // End of variables declaration//GEN-END:variables
 }
