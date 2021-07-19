@@ -33,12 +33,15 @@ public class chat extends javax.swing.JFrame {
         
         this.setLocationRelativeTo(null); // center screen
         this.setResizable(false);
+        mensajeTextArea.setLineWrap(true);
 
         chatPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         contexto = asistente.getRespuesta("Hola");
         String respuesta = contexto.getOutput().getGeneric().get(0).text();
         mensajes.setMensaje("bot", respuesta);
         this.render(mensajes.getMensajesPanel());
+        
+        
     }
 
     /**
@@ -73,7 +76,10 @@ public class chat extends javax.swing.JFrame {
         );
 
         mensajeTextArea.setColumns(20);
-        mensajeTextArea.setRows(5);
+        mensajeTextArea.setLineWrap(true);
+        mensajeTextArea.setRows(3);
+        mensajeTextArea.setWrapStyleWord(true);
+        mensajeTextArea.setAutoscrolls(false);
         mensajeTextArea.setRequestFocusEnabled(false);
         mensajeTextArea.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -131,14 +137,13 @@ public class chat extends javax.swing.JFrame {
         );
         scrollPanel.setBorder(null);
         scrollPanel.setPreferredSize(new Dimension(chatPanel.getSize().width, chatPanel.getSize().height - 10));
-        
-        mensajeTextArea.setText("");
-        mensajeTextArea.requestFocus();
 
         chatPanel.removeAll();
         chatPanel.add(scrollPanel);
         chatPanel.revalidate();
         chatPanel.repaint();
+        mensajeTextArea.selectAll();
+        mensajeTextArea.replaceSelection("");
         mensajeTextArea.requestFocus();
 
         // scroll to bottom
@@ -152,15 +157,27 @@ public class chat extends javax.swing.JFrame {
     private void enviarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarButtonActionPerformed
         // TODO add your handling code here:
         String mensaje = mensajeTextArea.getText().replaceAll("[\\n\\t]", "");
-        mensajes.setMensaje(mensaje);
         
-        contexto = asistente.getRespuesta(mensaje);
+        if("".equals(mensaje.replaceAll("\\s", ""))) {
+            mensajeTextArea.selectAll();
+            mensajeTextArea.replaceSelection("");
+            return;
+        }
+
+        mensajes.setMensaje(mensaje);
+        if(contexto != null && contexto.getContext() != null) {
+            contexto = asistente.getRespuesta(mensaje, contexto.getContext());
+        } else {
+            contexto = asistente.getRespuesta(mensaje);
+        }
+        
         List<RuntimeResponseGeneric> respuestas = contexto.getOutput().getGeneric();
         for (int i = 0; i < respuestas.size(); i++) {
             mensajes.setMensaje("bot", respuestas.get(i).text());
         }
 
         this.render(mensajes.getMensajesPanel());
+        mensajeTextArea.setCaretPosition(0);
     }//GEN-LAST:event_enviarButtonActionPerformed
 
     private void mensajeTextAreaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mensajeTextAreaMousePressed
