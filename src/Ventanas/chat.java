@@ -1,3 +1,5 @@
+package Ventanas;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -22,7 +24,7 @@ import java.awt.event.KeyEvent;
 public class chat extends javax.swing.JFrame {
     private Mensajes mensajes = new Mensajes();
     private watson asistente = new watson();
-    private MessageResponse contexto;
+    private MessageResponse contexto = null;
     
    
     /**
@@ -35,10 +37,7 @@ public class chat extends javax.swing.JFrame {
         mensajeTextArea.setLineWrap(true);
 
         chatPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        contexto = asistente.getRespuesta("Hola");
-        String respuesta = contexto.getOutput().getGeneric().get(0).text();
-        mensajes.setMensaje("bot", respuesta);
-        this.render(mensajes.getMensajesPanel());
+        reponder("Hola");
     }
 
     /**
@@ -148,7 +147,30 @@ public class chat extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void render(JPanel mainPanel) {
+    public void reponder(String mensaje){
+        if(contexto != null && contexto.getContext() != null) {
+            contexto = asistente.getRespuesta(mensaje, contexto.getContext());
+        } else {
+            contexto = asistente.getRespuesta(mensaje);
+        }
+        
+        List<RuntimeResponseGeneric> respuestas = contexto.getOutput().getGeneric();
+        for (int i = 0; i < respuestas.size(); i++) {
+            RuntimeResponseGeneric respuesta = respuestas.get(i);
+            mensajes.setMensaje(respuesta.text(), "bot");
+        }
+        
+        if(
+            contexto.getOutput().getIntents().size() > 0 &&
+            contexto.getOutput().getIntents().get(0).intent().equals("ReportIssue")
+        ){
+            mensajes.crearTktOpcion(this);
+        }
+        
+        this.render(mensajes.getMensajesPanel());
+    }
+    
+    public void render(JPanel mainPanel) {
         JScrollPane scrollPanel = new JScrollPane( mainPanel,
             JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
@@ -183,19 +205,7 @@ public class chat extends javax.swing.JFrame {
         }
 
         mensajes.setMensaje(mensaje);
-        if(contexto != null && contexto.getContext() != null) {
-            contexto = asistente.getRespuesta(mensaje, contexto.getContext());
-        } else {
-            contexto = asistente.getRespuesta(mensaje);
-        }
-        
-        List<RuntimeResponseGeneric> respuestas = contexto.getOutput().getGeneric();
-        for (int i = 0; i < respuestas.size(); i++) {
-            mensajes.setMensaje("bot", respuestas.get(i).text());
-        }
-
-        this.render(mensajes.getMensajesPanel());
-        mensajeTextArea.setCaretPosition(0);
+        reponder(mensaje);
     }//GEN-LAST:event_enviarButtonActionPerformed
 
     private void mensajeTextAreaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mensajeTextAreaMousePressed
