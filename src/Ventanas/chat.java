@@ -11,21 +11,25 @@ import java.awt.event.AdjustmentListener;
 import javax.swing.*;
 import java.util.List;
 
+import Archivos.archivo;
 import Chat.Mensajes;
 import Chat.watson;
 import com.ibm.watson.assistant.v2.model.MessageResponse;
 import com.ibm.watson.assistant.v2.model.RuntimeResponseGeneric;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  *
  * @author d.murillo.porras
  */
 public class chat extends javax.swing.JFrame {
+    private archivo datos = new archivo();
+    private ArrayList<String[]> listaPreguntas = datos.leerArchivoCSV("preguntas");
     private Mensajes mensajes = new Mensajes();
     private watson asistente = new watson();
     private MessageResponse contexto = null;
-    
+            
    
     /**
      * Creates new form chat
@@ -35,8 +39,8 @@ public class chat extends javax.swing.JFrame {
         this.setLocationRelativeTo(null); // center screen
         this.setResizable(false);
         mensajeTextArea.setLineWrap(true);
-
         chatPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        
         reponder("Hola");
     }
 
@@ -56,6 +60,7 @@ public class chat extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         logInMenu = new javax.swing.JMenu();
         tktMenu = new javax.swing.JMenu();
+        adminPreguntas = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 600));
@@ -115,6 +120,14 @@ public class chat extends javax.swing.JFrame {
         });
         jMenuBar1.add(tktMenu);
 
+        adminPreguntas.setText("Administrador");
+        adminPreguntas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                adminPreguntasMousePressed(evt);
+            }
+        });
+        jMenuBar1.add(adminPreguntas);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -157,7 +170,19 @@ public class chat extends javax.swing.JFrame {
         List<RuntimeResponseGeneric> respuestas = contexto.getOutput().getGeneric();
         for (int i = 0; i < respuestas.size(); i++) {
             RuntimeResponseGeneric respuesta = respuestas.get(i);
-            mensajes.setMensaje(respuesta.text(), "bot");
+            String respuestaTexto = respuesta.text();
+            
+            if(respuestaTexto.contains("##")) {
+                String[] linea = datos.BuscarDato(respuestaTexto, 0, listaPreguntas);
+                if(linea != null && linea.length > 0) {
+                    String[] respuestaArchivo = linea[1].split("#NL");
+                    for (int j = 0; j < respuestaArchivo.length; j++) {
+                        mensajes.setMensaje(respuestaArchivo[j], "bot");
+                    }
+                }
+            } else {
+                mensajes.setMensaje(respuestaTexto, "bot");
+            }
         }
         
         if(
@@ -231,6 +256,11 @@ public class chat extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_tktMenuMousePressed
 
+    private void adminPreguntasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminPreguntasMousePressed
+        // TODO add your handling code here:
+        datos.crearArchivoCSV("copiadeistapreguntas", listaPreguntas);
+    }//GEN-LAST:event_adminPreguntasMousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -267,6 +297,7 @@ public class chat extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu adminPreguntas;
     private javax.swing.JPanel chatPanel;
     private javax.swing.JButton enviarButton;
     private javax.swing.JMenuBar jMenuBar1;
