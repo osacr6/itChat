@@ -11,12 +11,15 @@ import java.awt.event.AdjustmentListener;
 import javax.swing.*;
 import java.util.List;
 
-import Archivos.archivo;
+import datos.*;
 import Chat.Mensajes;
 import Chat.watson;
 import com.ibm.watson.assistant.v2.model.MessageResponse;
 import com.ibm.watson.assistant.v2.model.RuntimeResponseGeneric;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 /**
@@ -24,13 +27,15 @@ import java.util.ArrayList;
  * @author d.murillo.porras
  */
 public class chat extends javax.swing.JFrame {
+    private utilidades utilidades = new utilidades();
     private archivo datos = new archivo();
-    private ArrayList<String[]> listaPreguntas = datos.leerArchivoCSV("preguntas");
+    private ArrayList<String[]> listaRespuestas = datos.leerArchivoCSV("respuestas");
     private Mensajes mensajes = new Mensajes();
     private watson asistente = new watson();
     private MessageResponse contexto = null;
+    
+    private boolean usuarioActivo  = false;
             
-   
     /**
      * Creates new form chat
      */
@@ -173,7 +178,7 @@ public class chat extends javax.swing.JFrame {
             String respuestaTexto = respuesta.text();
             
             if(respuestaTexto.contains("##")) {
-                String[] linea = datos.BuscarDato(respuestaTexto, 0, listaPreguntas);
+                String[] linea = datos.BuscarDato(respuestaTexto, 0, listaRespuestas);
                 if(linea != null && linea.length > 0) {
                     String[] respuestaArchivo = linea[1].split("#NL");
                     for (int j = 0; j < respuestaArchivo.length; j++) {
@@ -196,6 +201,7 @@ public class chat extends javax.swing.JFrame {
     }
     
     public void render(JPanel mainPanel) {
+        usuarioActivo = false;
         JScrollPane scrollPanel = new JScrollPane( mainPanel,
             JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
@@ -212,11 +218,15 @@ public class chat extends javax.swing.JFrame {
         mensajeTextArea.requestFocus();
 
         // scroll to bottom
-        scrollPanel.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {  
+        scrollPanel.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() { 
             public void adjustmentValueChanged(AdjustmentEvent e) {  
-                e.getAdjustable().setValue(e.getAdjustable().getMaximum());  
+                if(!usuarioActivo) {
+                     e.getAdjustable().setValue(e.getAdjustable().getMaximum());  
+                }
             }
         });
+        
+        utilidades.setTimeout(() -> usuarioActivo = true, 1000);
     }
     
     private void enviarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarButtonActionPerformed
@@ -258,7 +268,9 @@ public class chat extends javax.swing.JFrame {
 
     private void adminPreguntasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminPreguntasMousePressed
         // TODO add your handling code here:
-        datos.crearArchivoCSV("copiadeistapreguntas", listaPreguntas);
+        //datos.crearArchivoCSV("copiadeistapreguntas", listaRespuestas);
+        new preguntasAdmin().setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_adminPreguntasMousePressed
 
     /**

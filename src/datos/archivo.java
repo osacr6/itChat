@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Archivos;
+package datos;
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -70,7 +70,6 @@ public class archivo {
             OutputStreamWriter osw = new OutputStreamWriter(is);
             Writer w = new BufferedWriter(osw);
             
-            
             for (int i = 0; i < csv.size(); i++) {
                 String[] datos = csv.get(i);
                 String lineatexto = "";
@@ -91,5 +90,4 @@ public class archivo {
             System.err.println("Error de archivo: " + e);
         }
     }
-    
 }
