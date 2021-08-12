@@ -1,7 +1,9 @@
 package Ventanas;
 
-import javax.swing.JOptionPane;
 
+import tiquetes.Usuario;
+import javax.swing.JOptionPane;
+import java.io.*;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -20,6 +22,7 @@ public class crearTiquete extends javax.swing.JFrame {
          setTitle("Tiquete de Usuario");
          setLocationRelativeTo(null);
          setResizable(false);
+         jRadioButton1.setSelected(true);
     }
 
     /**
@@ -31,6 +34,7 @@ public class crearTiquete extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jlabel1 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         txtid = new javax.swing.JLabel();
@@ -39,6 +43,9 @@ public class crearTiquete extends javax.swing.JFrame {
         Btnaceptar = new javax.swing.JButton();
         Btncancelar = new javax.swing.JButton();
         txtTexto = new javax.swing.JFormattedTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tiquete");
@@ -84,6 +91,22 @@ public class crearTiquete extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setText("Estado");
+
+        buttonGroup1.add(jRadioButton1);
+        jRadioButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jRadioButton1.setText("Activo");
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(jRadioButton2);
+        jRadioButton2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jRadioButton2.setText("Inactivo");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -107,7 +130,13 @@ public class crearTiquete extends javax.swing.JFrame {
                                 .addComponent(txtid)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jRadioButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jRadioButton2)))
                         .addGap(0, 24, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -126,7 +155,12 @@ public class crearTiquete extends javax.swing.JFrame {
                         .addComponent(jlabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 77, Short.MAX_VALUE))
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jRadioButton1)
+                            .addComponent(jRadioButton2))
+                        .addGap(0, 24, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -137,13 +171,45 @@ public class crearTiquete extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-     
+     /*git*/
       private void limpiartxt(){
     txtNombre.setText("");
     txtID.setText("");
     txtTexto.setText("");
     }
-    
+      private void agregar(){
+            try{
+        if ((txtNombre.getText().equals("")) && (txtID.getText().equals("0"))
+                && (txtTexto.getText().equals(""))) {
+             JOptionPane.showMessageDialog(null, "Hay campos en blanco, revise!",
+                        "Campos en blanco", JOptionPane.ERROR_MESSAGE);
+         } else {
+              Usuario a = new Usuario();
+              a.setUsuario(txtNombre.getText());
+              a.setId(Integer.parseInt(String.valueOf(txtID.getText())));
+              a.setDescripcion(txtTexto.getText());
+              if (jRadioButton1.isSelected()) {
+                    a.setEstado("Activo");
+                } else if (jRadioButton2.isSelected()) {
+                    a.setEstado("Inactivo");
+                }
+            DataOutputStream Userdatos = new DataOutputStream(new FileOutputStream("tiquete.dat", true));
+            Userdatos.writeUTF(a.getUsuario());
+            Userdatos.writeInt(a.getId());
+            Userdatos.writeUTF(a.getDescripcion());
+            Userdatos.writeUTF(a.getEstado());
+              JOptionPane.showMessageDialog(null,
+                        "Se guardaron los correctamente", "Datos agregados", JOptionPane.INFORMATION_MESSAGE);
+                 limpiartxt();
+                Userdatos.close();
+        }
+     }catch (Exception e){
+      JOptionPane.showMessageDialog(null,
+                    "Ocurrió un error al escribir el registro de datod" + "\n\n" + e.getMessage());}
+          
+      }
+     
+   
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
@@ -153,23 +219,10 @@ public class crearTiquete extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIDActionPerformed
 
     private void BtnaceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnaceptarActionPerformed
-        String nombre = txtNombre.getText();
-        String id = txtID.getText();
-        String description = txtTexto.getText();
-
-        if ((txtNombre.getText().length() == 0) && (txtID.getText().length() == 0)
-                && (txtTexto.getText().length() == 0)) {
-            JOptionPane.showMessageDialog(this, "Ingrese un nombre", "Nombre", JOptionPane.ERROR_MESSAGE);
-            JOptionPane.showMessageDialog(this, "Ingrese un id", "Id", JOptionPane.ERROR_MESSAGE);
-            JOptionPane.showMessageDialog(this, "Debe ingresar una descripcion", "Descripcion", JOptionPane.ERROR_MESSAGE);
-
-        } else {
-            JOptionPane.showMessageDialog(null, "tiquete valido");
-            JOptionPane.showMessageDialog(this, "Solicitud enviada con exito", "Exito", JOptionPane.INFORMATION_MESSAGE);
-        }
-          limpiartxt();
+         agregar();
+       
     }//GEN-LAST:event_BtnaceptarActionPerformed
-
+    
     private void BtncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtncancelarActionPerformed
         int opcion;
 
@@ -185,6 +238,10 @@ public class crearTiquete extends javax.swing.JFrame {
     private void txtTextoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTextoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTextoActionPerformed
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -224,6 +281,10 @@ public class crearTiquete extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Btnaceptar;
     private javax.swing.JButton Btncancelar;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JLabel jlabel1;
     private javax.swing.JLabel jlabel2;
     private javax.swing.JTextField txtID;
