@@ -213,6 +213,7 @@ public class crearTiquete extends javax.swing.JFrame {
                  limpiartxt();
                 Userdatos.close();
                 volverChat();
+                //nuevo codigo
         }
      }catch (Exception e){
       JOptionPane.showMessageDialog(null,
