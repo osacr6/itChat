@@ -172,6 +172,7 @@ public class crearTiquete extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
      /*git*/
+     /*git2*/
       private void limpiartxt(){
     txtNombre.setText("");
     txtID.setText("");
