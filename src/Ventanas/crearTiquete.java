@@ -177,6 +177,15 @@ public class crearTiquete extends javax.swing.JFrame {
     txtID.setText("");
     txtTexto.setText("");
     }
+      
+      private void volverChat(){
+          
+      chat acceso = new chat();
+       acceso.setVisible(true);
+       this.setVisible(false);
+      }
+      
+      
       private void agregar(){
             try{
         if ((txtNombre.getText().equals("")) && (txtID.getText().equals("0"))
@@ -202,11 +211,13 @@ public class crearTiquete extends javax.swing.JFrame {
                         "Se guardaron los correctamente", "Datos agregados", JOptionPane.INFORMATION_MESSAGE);
                  limpiartxt();
                 Userdatos.close();
+                volverChat();
         }
      }catch (Exception e){
       JOptionPane.showMessageDialog(null,
-                    "Ocurrió un error al escribir el registro de datod" + "\n\n" + e.getMessage());}
-          
+                    "Ocurrió un error al escribir el registro de datod" + "\n\n" + e.getMessage());
+     }
+         
       }
      
    
@@ -220,7 +231,7 @@ public class crearTiquete extends javax.swing.JFrame {
 
     private void BtnaceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnaceptarActionPerformed
          agregar();
-       
+         limpiartxt();   
     }//GEN-LAST:event_BtnaceptarActionPerformed
     
     private void BtncancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtncancelarActionPerformed
@@ -231,8 +242,8 @@ public class crearTiquete extends javax.swing.JFrame {
             JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
 
         if (opcion == 0) {
-            System.exit(0);
-        }
+       System.exit(0);
+       }
     }//GEN-LAST:event_BtncancelarActionPerformed
 
     private void txtTextoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTextoActionPerformed
