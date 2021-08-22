@@ -62,15 +62,14 @@ public class chat extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         mensajeTextArea = new javax.swing.JTextArea();
         enviarButton = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        logInMenu = new javax.swing.JMenu();
+        chatMenu = new javax.swing.JMenuBar();
         tktMenu = new javax.swing.JMenu();
-        adminPreguntas1 = new javax.swing.JMenu();
-        adminTkt = new javax.swing.JMenu();
-        adminPreguntas = new javax.swing.JMenu();
+        adminMenuItem = new javax.swing.JMenu();
+        adminTkt = new javax.swing.JMenuItem();
+        adminPreguntas = new javax.swing.JMenuItem();
+        contactarSoporte = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 600));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -116,47 +115,39 @@ public class chat extends javax.swing.JFrame {
             }
         });
 
-        logInMenu.setText("IngresarDatos");
-        logInMenu.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                logInMenuMousePressed(evt);
-            }
-        });
-        logInMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logInMenuActionPerformed(evt);
-            }
-        });
-        jMenuBar1.add(logInMenu);
-
         tktMenu.setText("Crear Tiquete");
         tktMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tktMenuMousePressed(evt);
             }
         });
-        jMenuBar1.add(tktMenu);
+        chatMenu.add(tktMenu);
 
-        adminPreguntas1.setText("Contactar Soporte ");
-        adminPreguntas1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                adminPreguntas1MousePressed(evt);
+        adminMenuItem.setText("Administrar");
+        adminMenuItem.setToolTipText("");
+
+        adminTkt.setText("Tiquetes");
+        adminMenuItem.add(adminTkt);
+
+        adminPreguntas.setText("Preguntas");
+        adminPreguntas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminPreguntasActionPerformed(evt);
             }
         });
-        jMenuBar1.add(adminPreguntas1);
+        adminMenuItem.add(adminPreguntas);
 
-        adminTkt.setText("Administrar Tiquetes");
-        jMenuBar1.add(adminTkt);
+        chatMenu.add(adminMenuItem);
 
-        adminPreguntas.setText("Administrar Preguntas");
-        adminPreguntas.addMouseListener(new java.awt.event.MouseAdapter() {
+        contactarSoporte.setText("Contactar Soporte ");
+        contactarSoporte.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                adminPreguntasMousePressed(evt);
+                contactarSoporteMousePressed(evt);
             }
         });
-        jMenuBar1.add(adminPreguntas);
+        chatMenu.add(contactarSoporte);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(chatMenu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -278,27 +269,11 @@ public class chat extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mensajeTextAreaKeyPressed
 
-    private void logInMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logInMenuMousePressed
-        // TODO add your handling code here:
-        new login().setVisible(true);
-    }//GEN-LAST:event_logInMenuMousePressed
-
     private void tktMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tktMenuMousePressed
         // TODO add your handling code here:
         new crearTiquete().setVisible(true);
         
     }//GEN-LAST:event_tktMenuMousePressed
-
-    private void adminPreguntasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminPreguntasMousePressed
-        // TODO add your handling code here:
-        //datos.crearArchivoCSV("copiadeistapreguntas", listaRespuestas);
-        new preguntasAdmin().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_adminPreguntasMousePressed
-
-    private void logInMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInMenuActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_logInMenuActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         int opcion;
@@ -312,10 +287,16 @@ public class chat extends javax.swing.JFrame {
        }
     }//GEN-LAST:event_formWindowClosing
 
-    private void adminPreguntas1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminPreguntas1MousePressed
+    private void contactarSoporteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_contactarSoporteMousePressed
         contactarSoporte c = new contactarSoporte();
         c.inicializarCliente();
-    }//GEN-LAST:event_adminPreguntas1MousePressed
+    }//GEN-LAST:event_contactarSoporteMousePressed
+
+    private void adminPreguntasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminPreguntasActionPerformed
+        // TODO add your handling code here:
+        new preguntasAdmin().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_adminPreguntasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -353,14 +334,14 @@ public class chat extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    protected javax.swing.JMenu adminPreguntas;
-    protected javax.swing.JMenu adminPreguntas1;
-    protected javax.swing.JMenu adminTkt;
+    public javax.swing.JMenu adminMenuItem;
+    private javax.swing.JMenuItem adminPreguntas;
+    private javax.swing.JMenuItem adminTkt;
+    private javax.swing.JMenuBar chatMenu;
     private javax.swing.JPanel chatPanel;
+    protected javax.swing.JMenu contactarSoporte;
     private javax.swing.JButton enviarButton;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JMenu logInMenu;
     private javax.swing.JTextArea mensajeTextArea;
     private javax.swing.JMenu tktMenu;
     // End of variables declaration//GEN-END:variables

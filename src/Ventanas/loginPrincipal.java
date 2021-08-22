@@ -151,8 +151,7 @@ public class loginPrincipal extends javax.swing.JFrame {
         } else {
             chat chatCliente = new chat();
             chatCliente.setVisible(true);
-            chatCliente.adminTkt.setVisible(false);
-            chatCliente.adminPreguntas.setVisible(false);
+            //chatCliente.adminMenuItem.setVisible(false);
             this.dispose();
         }
 

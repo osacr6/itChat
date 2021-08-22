@@ -31,6 +31,16 @@ public class preguntasAdmin extends javax.swing.JFrame {
         respuestasTable.setModel(modelo);
         respuestasTable.getColumnModel().getColumn(1).setPreferredWidth(500);
     }
+    
+    private void actulizar() {
+        datos.crearArchivoCSV("respuestas", listaRespuestas);
+        utilidadRespuestas = new respuestas(listaRespuestas);
+        modelo = utilidadRespuestas.getModelo();
+        respuestasTable.setModel(modelo);
+        respuestasTable.getColumnModel().getColumn(1).setPreferredWidth(500);
+        respuestaIdTextField.setText("");
+        respuestaTextArea.setText("");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -51,12 +61,8 @@ public class preguntasAdmin extends javax.swing.JFrame {
         listaRespuestasLabel = new javax.swing.JLabel();
         guardarButton = new javax.swing.JButton();
         eliminarButton = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 600));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -101,14 +107,11 @@ public class preguntasAdmin extends javax.swing.JFrame {
         });
 
         eliminarButton.setText("Eliminar");
-
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
-
-        setJMenuBar(jMenuBar1);
+        eliminarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -148,7 +151,7 @@ public class preguntasAdmin extends javax.swing.JFrame {
                 .addComponent(listaRespuestasLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         pack();
@@ -164,6 +167,25 @@ public class preguntasAdmin extends javax.swing.JFrame {
 
     private void guardarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarButtonActionPerformed
         // TODO add your handling code here:
+        String[] respuesta = datos.BuscarDato(respuestaIdTextField.getText(), 0, listaRespuestas);
+        
+        if(respuesta != null) {
+            for (int i = 0; i < listaRespuestas.size(); i++) {
+                String[] linea = listaRespuestas.get(i);
+                if(linea[0].replaceAll("\\s", "").equals(respuestaIdTextField.getText().replaceAll("\\s", ""))) {
+                    linea[1] = respuestaTextArea.getText().replaceAll(",", ".");
+                }
+            }
+        } else {
+            listaRespuestas.add(
+                new String[] {
+                    respuestaIdTextField.getText().replaceAll("\\s", ""),
+                    respuestaTextArea.getText().replaceAll(",", ".")
+                }
+            );
+        }
+        
+        this.actulizar();
     }//GEN-LAST:event_guardarButtonActionPerformed
 
     private void respuestasTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_respuestasTableMouseClicked
@@ -179,6 +201,21 @@ public class preguntasAdmin extends javax.swing.JFrame {
             );
         }
     }//GEN-LAST:event_respuestasTableMouseClicked
+
+    private void eliminarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarButtonActionPerformed
+        // TODO add your handling code here:
+        String[] respuesta = datos.BuscarDato(respuestaIdTextField.getText(), 0, listaRespuestas);
+        
+        if(respuesta != null) {
+            for (int i = 0; i < listaRespuestas.size(); i++) {
+                String[] linea = listaRespuestas.get(i);
+                if(linea[0].replaceAll("\\s", "").equals(respuestaIdTextField.getText().replaceAll("\\s", ""))) {
+                    listaRespuestas.remove(i);
+                }
+            }
+        }
+        this.actulizar();
+    }//GEN-LAST:event_eliminarButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -219,9 +256,6 @@ public class preguntasAdmin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton eliminarButton;
     private javax.swing.JButton guardarButton;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel listaRespuestasLabel;
