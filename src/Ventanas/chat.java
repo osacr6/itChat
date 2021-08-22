@@ -63,7 +63,6 @@ public class chat extends javax.swing.JFrame {
         mensajeTextArea = new javax.swing.JTextArea();
         enviarButton = new javax.swing.JButton();
         chatMenu = new javax.swing.JMenuBar();
-        tktMenu = new javax.swing.JMenu();
         adminMenuItem = new javax.swing.JMenu();
         adminTkt = new javax.swing.JMenuItem();
         adminPreguntas = new javax.swing.JMenuItem();
@@ -115,18 +114,15 @@ public class chat extends javax.swing.JFrame {
             }
         });
 
-        tktMenu.setText("Crear Tiquete");
-        tktMenu.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                tktMenuMousePressed(evt);
-            }
-        });
-        chatMenu.add(tktMenu);
-
         adminMenuItem.setText("Administrar");
         adminMenuItem.setToolTipText("");
 
         adminTkt.setText("Tiquetes");
+        adminTkt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adminTktActionPerformed(evt);
+            }
+        });
         adminMenuItem.add(adminTkt);
 
         adminPreguntas.setText("Preguntas");
@@ -269,12 +265,6 @@ public class chat extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mensajeTextAreaKeyPressed
 
-    private void tktMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tktMenuMousePressed
-        // TODO add your handling code here:
-        new crearTiquete().setVisible(true);
-        
-    }//GEN-LAST:event_tktMenuMousePressed
-
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         int opcion;
 
@@ -297,6 +287,12 @@ public class chat extends javax.swing.JFrame {
         new preguntasAdmin().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_adminPreguntasActionPerformed
+
+    private void adminTktActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminTktActionPerformed
+        // TODO add your handling code here:
+        new tiquetesAdmin().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_adminTktActionPerformed
 
     /**
      * @param args the command line arguments
@@ -343,6 +339,5 @@ public class chat extends javax.swing.JFrame {
     private javax.swing.JButton enviarButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea mensajeTextArea;
-    private javax.swing.JMenu tktMenu;
     // End of variables declaration//GEN-END:variables
 }
