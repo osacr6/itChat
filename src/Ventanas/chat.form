@@ -20,9 +20,14 @@
             <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tktMenuMousePressed"/>
           </Events>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="adminTkt">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Administrar Tiquetes"/>
+          </Properties>
+        </Menu>
         <Menu class="javax.swing.JMenu" name="adminPreguntas">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Administrador"/>
+            <Property name="text" type="java.lang.String" value="Administrar Preguntas"/>
           </Properties>
           <Events>
             <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="adminPreguntasMousePressed"/>

@@ -115,6 +115,8 @@ public class Mensajes extends ChatConf {
         JButton btnNo = new JButton();
         btnSi.setText("SI");
         btnNo.setText("No");
+        btnSi.setPreferredSize(new Dimension(80, 25));
+        btnNo.setPreferredSize(new Dimension(80, 25));
         
         btnSi.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) {

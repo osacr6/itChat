@@ -12,6 +12,6 @@ package Ventanas;
  */
 public class Main {
     public static void main(String[] args) {
-        new chat().setVisible(true);
+        new loginPrincipal().setVisible(true);
     }    
 }

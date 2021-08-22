@@ -1,5 +1,7 @@
 package Ventanas;
 
+import Usuarios.usuario;
+import datos.usuarios;
 import java.io.DataInputStream;
 import java.io.EOFException;
 import java.io.FileInputStream;
@@ -10,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class login extends javax.swing.JFrame {
+    usuarios DatosDeUsuarios = new usuarios();
 
     public login() {
         initComponents();
@@ -184,39 +187,6 @@ public class login extends javax.swing.JFrame {
         limpiarControles();
     }//GEN-LAST:event_IngresarActionPerformed
 
-    public void consultar(String cedula) {
-        String nom, primAp, segAp, ced, email;
-        try {
-            DataInputStream entrada = new DataInputStream(new FileInputStream("Datos_Clientes.dat"));
-            try {
-                while (true) {
-                    nom = entrada.readUTF();
-                    primAp = entrada.readUTF();
-                    segAp = entrada.readUTF();
-                    ced = entrada.readUTF();
-                    email = entrada.readUTF();
-                    if (ced.equals(cedula)) {
-                        jTextField1.setText(nom);
-                        jTextField2.setText(primAp);
-                        jTextField3.setText(segAp);
-                        jTextField4.setText(ced);
-                        jTextField5.setText(email);
-                    }
-
-                }
-            } catch (EOFException ex) {
-                entrada.close();
-            }
-        } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(null,
-                    "¡El archivo no existe!", "Archivo no existe",
-                    JOptionPane.ERROR_MESSAGE);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null,
-                    "¡Error desconocido!", "Error desconocido",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-    }
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
@@ -242,7 +212,13 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu1ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        consultar(jTextField4.getText());
+        usuario nn = DatosDeUsuarios.consultar(jTextField4.getText());
+
+        jTextField1.setText(nn.getNombre());
+        jTextField2.setText(nn.getPrimApellido());
+        jTextField3.setText(nn.getSegApellido());
+        jTextField4.setText(nn.getCedula());
+        jTextField5.setText(nn.getEmai());
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**

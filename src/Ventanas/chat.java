@@ -65,6 +65,7 @@ public class chat extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         logInMenu = new javax.swing.JMenu();
         tktMenu = new javax.swing.JMenu();
+        adminTkt = new javax.swing.JMenu();
         adminPreguntas = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -125,7 +126,10 @@ public class chat extends javax.swing.JFrame {
         });
         jMenuBar1.add(tktMenu);
 
-        adminPreguntas.setText("Administrador");
+        adminTkt.setText("Administrar Tiquetes");
+        jMenuBar1.add(adminTkt);
+
+        adminPreguntas.setText("Administrar Preguntas");
         adminPreguntas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 adminPreguntasMousePressed(evt);
@@ -310,6 +314,7 @@ public class chat extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu adminPreguntas;
+    private javax.swing.JMenu adminTkt;
     private javax.swing.JPanel chatPanel;
     private javax.swing.JButton enviarButton;
     private javax.swing.JMenuBar jMenuBar1;
