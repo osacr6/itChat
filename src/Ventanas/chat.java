@@ -65,11 +65,17 @@ public class chat extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         logInMenu = new javax.swing.JMenu();
         tktMenu = new javax.swing.JMenu();
+        adminPreguntas1 = new javax.swing.JMenu();
         adminTkt = new javax.swing.JMenu();
         adminPreguntas = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 600));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         chatPanel.setBackground(new java.awt.Color(255, 255, 255));
         chatPanel.setPreferredSize(new java.awt.Dimension(700, 500));
@@ -110,10 +116,15 @@ public class chat extends javax.swing.JFrame {
             }
         });
 
-        logInMenu.setText("Iniciar sesion");
+        logInMenu.setText("IngresarDatos");
         logInMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 logInMenuMousePressed(evt);
+            }
+        });
+        logInMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logInMenuActionPerformed(evt);
             }
         });
         jMenuBar1.add(logInMenu);
@@ -125,6 +136,14 @@ public class chat extends javax.swing.JFrame {
             }
         });
         jMenuBar1.add(tktMenu);
+
+        adminPreguntas1.setText("Contactar Soporte ");
+        adminPreguntas1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                adminPreguntas1MousePressed(evt);
+            }
+        });
+        jMenuBar1.add(adminPreguntas1);
 
         adminTkt.setText("Administrar Tiquetes");
         jMenuBar1.add(adminTkt);
@@ -267,7 +286,7 @@ public class chat extends javax.swing.JFrame {
     private void tktMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tktMenuMousePressed
         // TODO add your handling code here:
         new crearTiquete().setVisible(true);
-        this.setVisible(false);
+        
     }//GEN-LAST:event_tktMenuMousePressed
 
     private void adminPreguntasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminPreguntasMousePressed
@@ -276,6 +295,27 @@ public class chat extends javax.swing.JFrame {
         new preguntasAdmin().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_adminPreguntasMousePressed
+
+    private void logInMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInMenuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_logInMenuActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        int opcion;
+
+        opcion =JOptionPane.showConfirmDialog(null,
+            "Desea salir?","Salir del sistema",
+            JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+
+        if (opcion == 0) {
+       System.exit(0);
+       }
+    }//GEN-LAST:event_formWindowClosing
+
+    private void adminPreguntas1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminPreguntas1MousePressed
+        contactarSoporte c = new contactarSoporte();
+        c.inicializarCliente();
+    }//GEN-LAST:event_adminPreguntas1MousePressed
 
     /**
      * @param args the command line arguments
@@ -313,8 +353,9 @@ public class chat extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu adminPreguntas;
-    private javax.swing.JMenu adminTkt;
+    protected javax.swing.JMenu adminPreguntas;
+    protected javax.swing.JMenu adminPreguntas1;
+    protected javax.swing.JMenu adminTkt;
     private javax.swing.JPanel chatPanel;
     private javax.swing.JButton enviarButton;
     private javax.swing.JMenuBar jMenuBar1;

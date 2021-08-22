@@ -7,6 +7,7 @@ package Ventanas;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -54,6 +55,11 @@ public class loginPrincipal extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel1.setText("Bienvenido ");
@@ -68,9 +74,15 @@ public class loginPrincipal extends javax.swing.JFrame {
             }
         });
 
+        llenarPassword.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
         llenarPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 llenarPasswordActionPerformed(evt);
+            }
+        });
+        llenarPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                llenarPasswordKeyTyped(evt);
             }
         });
 
@@ -85,6 +97,10 @@ public class loginPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(157, 157, 157)
+                .addComponent(ingresar)
+                .addContainerGap(170, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(47, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,18 +108,10 @@ public class loginPrincipal extends javax.swing.JFrame {
                     .addComponent(password))
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
                     .addComponent(llenarPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(llenarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(124, 124, 124)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(157, 157, 157)
-                        .addComponent(ingresar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,7 +135,6 @@ public class loginPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void llenarPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_llenarPasswordActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_llenarPasswordActionPerformed
 
     private void llenarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_llenarUsuarioActionPerformed
@@ -138,17 +145,34 @@ public class loginPrincipal extends javax.swing.JFrame {
         String compUser = llenarUsuario.getText();
         String compPassword = llenarPassword.getText();
         if ((compUser.equals(userAdmin)) && (compPassword.equals(passwordAdmin))) {
-            windowAdmin windowAdmin = new windowAdmin();
-            windowAdmin.setVisible(true);
+            chat chatAdmin = new chat();
+            chatAdmin.setVisible(true);
             this.dispose();
         } else {
-            login login = new login();
-            login.setVisible(true);
+            chat chatCliente = new chat();
+            chatCliente.setVisible(true);
+            chatCliente.adminTkt.setVisible(false);
+            chatCliente.adminPreguntas.setVisible(false);
             this.dispose();
         }
 
 
     }//GEN-LAST:event_ingresarActionPerformed
+
+    private void llenarPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_llenarPasswordKeyTyped
+    }//GEN-LAST:event_llenarPasswordKeyTyped
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        int opcion;
+
+        opcion =JOptionPane.showConfirmDialog(null,
+            "Desea salir?","Salir del sistema",
+            JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+
+        if (opcion == 0) {
+       System.exit(0);
+       }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
