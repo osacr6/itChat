@@ -33,6 +33,7 @@ public class chat extends javax.swing.JFrame {
     private Mensajes mensajes = new Mensajes();
     private watson asistente = new watson();
     private MessageResponse contexto = null;
+    private boolean lineDirecta = false;
     
     private boolean usuarioActivo  = false;
             
@@ -279,6 +280,16 @@ public class chat extends javax.swing.JFrame {
 
     private void contactarSoporteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_contactarSoporteMousePressed
         contactarSoporte c = new contactarSoporte();
+        this.lineDirecta = true;
+        contactarSoporte.setText("Terminar Soporte");
+        
+        if(this.lineDirecta ) {
+            
+        }
+        
+        mensajes.setMensaje("Conectado linea directa con Soporte tecnico ...", "bot");
+        this.render(mensajes.getMensajesPanel());
+        
         c.inicializarCliente();
     }//GEN-LAST:event_contactarSoporteMousePressed
 

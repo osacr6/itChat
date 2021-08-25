@@ -1,5 +1,9 @@
-/nbproject/private/*
+/nbproject/private/
 /build/
 /dist/
 *.class
 *.log
+/soporteIt/build/
+/soporteIt/dist/
+/soporteIt/nbproject/private/
+soporteIt/dist/soporteIt.jar
